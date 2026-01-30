@@ -1,0 +1,52 @@
+Integration design patterns:
+  - Mainly 6 types
+    - based on 6 behavior types
+
+Remote process Invocation
+1. Request and Reply
+2. Fire and Forget
+
+
+3. Batch data sychronization
+4. Remote call-in
+5. UI based update on data changes
+6. Data visualization
+
+1. Request & Reply
+  E.g: Claim management system (Claim API); Waiting for external app to send response
+  Inbound/Outbound : Outbound
+  Best Sol: Call out from lightning flow; Callouts using external services (Swagger Schema); Button in LWC/Aura/VF Page; SOAP Api callout; Http Rest callout
+  Sub optimal Sol: Apex batch; queueable apex; apex trigger (async call) (SOAP API or Http rest callout)
+  Flow: Salesforce to external
+
+2. Fire & Forget: Whenver the response is available, we are going to process
+  Outbound
+  Best Sol: Platform event
+  Good sol: Outbound message; Outbound message with callback
+  Sub optimal: Using button from UI, Apex batch; queueable apex; apex trigger (async call) (SOAP API or Http rest callout)
+  Flow: Salesforce to external
+
+3. Batch data synchronization
+    Outbound & Inbound
+    Outbound: Best: Enable CDC || Good: ETL ;; Suboptimal sol: Remote process invocation || Flow: Salesforce to external
+    Inbound: Best: ETL(Mulesoft/jitterbit/Talend/Informatica) || Sub-optimal sol: Remote call-in || Flow: External to salesforce
+    
+4. Remote Call-in  
+  E.g.:  Node JS wants to send and get the data from salesforce
+  Source system: External
+  Inbound/outbound: Inbound
+  Best Sol: 1. SOAP API 2. HTTP Rest API 3. Bulk API (Asyncronous)
+  Sub optimal Sol: 1. Apex Web Service 2. Apex Rest Service
+  Flow: External systme -> Salesforce
+
+5. UI update based on data changes
+  E.g: Salesforce updates to be shared with external systems
+  Outbound & Inbound
+  Outbound: Best: PubSub model/Platform event
+  Inbound: Udpating the salesforce with updates in external systems: Best sol is PubSub or Platform events
+
+6. Data virtualization
+Outbound
+Best: Salesforce connect
+SubOptimal: 1. LWC/Aura/VF to display data by getting it from external system 2. Request & Reply
+
